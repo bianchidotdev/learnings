@@ -25,7 +25,6 @@ jobs:
     - name: Change into project
       run: |
         cd ${{ matrix.project }}
-        ls
 
     - name: Install Erlang/OTP + Elixir
       id: setup-beam
@@ -50,6 +49,8 @@ jobs:
         
     - name: Dependencies
       run: |
+        pwd
+        ls
         mix deps.get
         mix deps.compile
 
