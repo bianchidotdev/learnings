@@ -90,5 +90,5 @@ jobs:
       with:
         name: doc-cover
         path: |
-          doc/
-          cover/
+          ./doc/
+          ./cover/
