@@ -67,7 +67,7 @@ jobs:
 
     # Create PLTs if no cache was found
     - name: Create PLTs
-      if: steps.plt_cache.outputs.cache-hit != 'true'
+      # if: steps.plt_cache.outputs.cache-hit != 'true'
       run: mix dialyzer --plt
 
     - name: Code
