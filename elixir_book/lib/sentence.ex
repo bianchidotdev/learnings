@@ -9,8 +9,8 @@ defmodule Sentence do
 
   """
   def capitalize_sentences(string) do
-    string |>
-      String.split(". ") |>
-      Enum.map_join(". ", &String.capitalize/1)
+    string
+    |> String.split(". ")
+    |> Enum.map_join(". ", &String.capitalize/1)
   end
 end

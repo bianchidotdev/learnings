@@ -18,11 +18,13 @@ defmodule Prime do
   end
 
   def primeify(acc, current, final) do
-    acc = if is_prime?(current, acc) do
-      acc ++ [current]
-    else
-      acc
-    end
+    acc =
+      if is_prime?(current, acc) do
+        acc ++ [current]
+      else
+        acc
+      end
+
     primeify(acc, current + 2, final)
   end
 

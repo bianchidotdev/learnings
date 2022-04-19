@@ -31,7 +31,8 @@ defmodule ElixirBook.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
-      {:stream_data, "~> 0.5", only: :test},
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
+      {:stream_data, "~> 0.5", only: [:dev, :test]}
     ]
   end
 end

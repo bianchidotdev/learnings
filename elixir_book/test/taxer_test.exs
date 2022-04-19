@@ -11,7 +11,7 @@ defmodule TaxerTest do
     [id: 127, ship_to: :NC, net_amount: 25.00],
     [id: 128, ship_to: :MA, net_amount: 10.00],
     [id: 129, ship_to: :CA, net_amount: 102.00],
-    [id: 130, ship_to: :NC, net_amount: 40.00],
+    [id: 130, ship_to: :NC, net_amount: 40.00]
   ]
   @expected_taxes [
     [total_amount: 107.50],
@@ -21,16 +21,16 @@ defmodule TaxerTest do
     [total_amount: 26.88],
     [total_amount: 10.00],
     [total_amount: 102.00],
-    [total_amount: 43.00],
+    [total_amount: 43.00]
   ]
   def expected do
-    @orders |>
-      Enum.zip_reduce(
-        @expected_taxes,
-        [],
-        fn x, y, acc -> [(x ++ y) | acc] end
-      ) |>
-      Enum.reverse
+    @orders
+    |> Enum.zip_reduce(
+      @expected_taxes,
+      [],
+      fn x, y, acc -> [x ++ y | acc] end
+    )
+    |> Enum.reverse()
   end
 
   # ch10 ListsAndRecursion-8
