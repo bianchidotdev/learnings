@@ -32,6 +32,8 @@ jobs:
     - name: Change into project
       run: |
         cd ${{ matrix.project }}
+        pwd
+        ls
 
     - name: Restore dependency/build cache 🗃️
       uses: actions/cache@v2
