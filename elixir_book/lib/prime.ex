@@ -1,4 +1,10 @@
 defmodule Prime do
+  @moduledoc """
+  Helper functions to generate lists of primes and determine if a number is prime.
+
+    iex> Prime.primeify([], 2, 10)
+    [2, 3, 5, 7]
+  """
   def primeify(_, current, _) when current < 2 do
     []
   end
@@ -20,13 +26,9 @@ defmodule Prime do
     primeify(acc, current + 2, final)
   end
 
-  defp is_prime?(2, _) do
-    true
-  end
-
-  defp is_prime?(n, _) when rem(n, 2) == 0 do
-    false
-  end
+  # defp is_prime?(2, _), do: true
+  # defp is_prime?(n, _) when rem(n, 2) == 0, do: false
+  # defp is_prime?(n, _) when n < 2, do: false
 
   defp is_prime?(n, prime_list) do
     !Enum.any?(prime_list, fn x -> rem(n, x) == 0 end)

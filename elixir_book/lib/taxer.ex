@@ -1,4 +1,7 @@
 defmodule Taxer do
+  @moduledoc """
+  Applies taxes to orders.
+  """
   def apply_state_taxes(orders, tax_rates) do
     orders |>
       Enum.map(&(add_taxes_to_order(&1, tax_rates)))

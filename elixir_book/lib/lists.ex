@@ -1,4 +1,8 @@
 defmodule Lists do
+  @moduledoc """
+  Module for generating lists
+  """
+
   import Prime, only: [primeify: 3]
 
   def span(from, to) do

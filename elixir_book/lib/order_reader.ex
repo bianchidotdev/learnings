@@ -1,4 +1,8 @@
 defmodule OrderReader do
+  @moduledoc """
+  Parses orders from a csv file
+  """
+
   def read(file) do
     {:ok, body} = File.read(file)
     body |>

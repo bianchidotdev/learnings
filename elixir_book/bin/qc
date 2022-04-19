@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set -e
+
+TESTS=$(mix test)
+COVERAGE=$(mix coveralls)
+DIALYZER=$(mix dialyzer)

@@ -1,6 +1,6 @@
 defmodule SentenceTest do
   use ExUnit.Case
-  doctest ElixirBook
+  doctest Sentence
 
   # ch11 StringsAndBinaries-6
   test "capitalizes sentences" do
