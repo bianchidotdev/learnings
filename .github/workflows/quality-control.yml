@@ -79,6 +79,8 @@ jobs:
         mix docs
  
     - name: Test
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mix test --warnings-as-errors --cover --export-coverage default
         mix coveralls.github
