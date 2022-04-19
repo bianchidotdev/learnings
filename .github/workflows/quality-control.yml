@@ -86,9 +86,9 @@ jobs:
         mix coveralls.github
 
     - name: Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: doc-cover
         path: |
-          doc
-          cover
+          doc/
+          cover/
