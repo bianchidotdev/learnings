@@ -1,5 +1,5 @@
 defmodule AdventOfCode2021.Day3 do
-  @doc """
+  @moduledoc """
   Test
   Example:
 

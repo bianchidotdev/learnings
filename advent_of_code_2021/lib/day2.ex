@@ -1,4 +1,7 @@
 defmodule AdventOfCode2021.Day2 do
+  @moduledoc """
+  Day 2 of Advent of Code 2021
+  """
   alias AdventOfCode2021.InputHandler, as: InputHandler
 
   def input do
