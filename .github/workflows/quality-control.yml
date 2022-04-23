@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [elixir_book]
+        project: [elixir_book, advent_of_code_2021]
 
     defaults:
       run:
