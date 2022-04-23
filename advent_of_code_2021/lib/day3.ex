@@ -7,9 +7,17 @@ defmodule AdventOfCode2021.Day3 do
       sample_input() |> calculate_energy_consumption()
     198
 
-    # iex> import AdventOfCode2021.Day3; \
-    #   sample_input() |> oxygen_rating()
-    # 23
+    iex> import AdventOfCode2021.Day3; \
+      sample_input() |> life_support_rating()
+    230
+
+    iex> import AdventOfCode2021.Day3; \
+      sample_input() |> list_of_bitstrings() |> oxygen_rating()
+    23
+
+    iex> import AdventOfCode2021.Day3; \
+      sample_input() |> list_of_bitstrings() |> co2_scrubber()
+    10
 
     iex> import AdventOfCode2021.Day3; \
       sample_input() |> list_of_bitstrings() |> gamma()
@@ -56,13 +64,57 @@ defmodule AdventOfCode2021.Day3 do
   end
 
   def ex2 do
-    input()
+    input() |> life_support_rating()
   end
 
   def calculate_energy_consumption(input) do
     bitstring_list = input |> list_of_bitstrings()
     gamma(bitstring_list) * epsilon(bitstring_list)
   end
+
+  def life_support_rating(input) do
+    bitstring_list = input |> list_of_bitstrings()
+    co2_scrubber(bitstring_list) * oxygen_rating(bitstring_list)
+  end
+
+  def co2_scrubber(bitstring_list) do
+    bitstring_list
+    |> co2_bit_list(0)
+    |> bitstring_to_decimal()
+  end
+
+  def co2_bit_list([head | []], _), do: head
+
+  def co2_bit_list(bitstring_list, bit) do
+    recessive = dominant_bit_for_bitstring_list(bitstring_list, bit) |> flip_bit()
+    new_list = bitstring_list
+    |> Enum.filter(&bit_filter(&1, bit, recessive))
+    co2_bit_list(new_list, bit + 1)
+  end
+
+  def co2_filter(bitstring, bit, val) do
+    extract_bit(bit, bitstring) == val
+  end
+
+  def oxygen_rating(bitstring_list) do
+    bitstring_list
+    |> oxygen_bit_list(0)
+    |> bitstring_to_decimal()
+  end
+
+  def oxygen_bit_list([head | []], _), do: head
+
+  def oxygen_bit_list(bitstring_list, bit) do
+    dominant = dominant_bit_for_bitstring_list(bitstring_list, bit)
+    new_list = bitstring_list
+    |> Enum.filter(&bit_filter(&1, bit, dominant))
+    oxygen_bit_list(new_list, bit + 1)
+  end
+
+  def bit_filter(bitstring, bit, val) do
+    extract_bit(bit, bitstring) == val
+  end
+
 
   def gamma(bitstring_list) do
     gamma_bit_list(bitstring_list)
@@ -125,9 +177,10 @@ defmodule AdventOfCode2021.Day3 do
       end)
       |> Enum.sum()
 
-    case num_ones > length(bitstring_list) / 2 do
-      true -> 1
-      false -> 0
+      threshold = length(bitstring_list) / 2
+    cond do
+      num_ones >= threshold -> 1
+      num_ones < threshold -> 0
     end
   end
 

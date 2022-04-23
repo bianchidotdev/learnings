@@ -6,7 +6,7 @@ defmodule AdventOfCode2021Test.Day3 do
     assert AdventOfCode2021.Day3.ex1() == 3_148_794
   end
 
-  # test "calculates final position and returns product of coordinate with aim" do
-  #   assert AdventOfCode2021.Day3.ex2() == 0
-  # end
+  test "calculates final position and returns product of coordinate with aim" do
+    assert AdventOfCode2021.Day3.ex2() == 2_795_310
+  end
 end
