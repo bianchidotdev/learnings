@@ -24,7 +24,7 @@ defmodule AdventOfCode2021.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
-      {:ex_doc, "~> 0.27", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.27", only: [:dev, :test], runtime: false}
     ]
   end
 end

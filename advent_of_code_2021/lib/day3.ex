@@ -33,7 +33,6 @@ defmodule AdventOfCode2021.Day3 do
 
     iex> import AdventOfCode2021.Day3; left_truncate_bitstring(<<31::5>>, 4)
     <<15::4>>
-
   """
   alias AdventOfCode2021.InputHandler, as: InputHandler
   require Logger
@@ -87,13 +86,12 @@ defmodule AdventOfCode2021.Day3 do
 
   def co2_bit_list(bitstring_list, bit) do
     recessive = dominant_bit_for_bitstring_list(bitstring_list, bit) |> flip_bit()
-    new_list = bitstring_list
-    |> Enum.filter(&bit_filter(&1, bit, recessive))
-    co2_bit_list(new_list, bit + 1)
-  end
 
-  def co2_filter(bitstring, bit, val) do
-    extract_bit(bit, bitstring) == val
+    new_list =
+      bitstring_list
+      |> Enum.filter(&bit_filter(&1, bit, recessive))
+
+    co2_bit_list(new_list, bit + 1)
   end
 
   def oxygen_rating(bitstring_list) do
@@ -106,15 +104,17 @@ defmodule AdventOfCode2021.Day3 do
 
   def oxygen_bit_list(bitstring_list, bit) do
     dominant = dominant_bit_for_bitstring_list(bitstring_list, bit)
-    new_list = bitstring_list
-    |> Enum.filter(&bit_filter(&1, bit, dominant))
+
+    new_list =
+      bitstring_list
+      |> Enum.filter(&bit_filter(&1, bit, dominant))
+
     oxygen_bit_list(new_list, bit + 1)
   end
 
   def bit_filter(bitstring, bit, val) do
     extract_bit(bit, bitstring) == val
   end
-
 
   def gamma(bitstring_list) do
     gamma_bit_list(bitstring_list)
@@ -166,6 +166,7 @@ defmodule AdventOfCode2021.Day3 do
     bit_size = bit_size(List.first(bitstring_list)) - bit
     rem_size = bit_size - 1
     ref = bitstring_to_decimal(<<1::1, 0::size(rem_size)>>)
+    threshold = length(bitstring_list) / 2
 
     num_ones =
       bitstring_list
@@ -177,7 +178,6 @@ defmodule AdventOfCode2021.Day3 do
       end)
       |> Enum.sum()
 
-      threshold = length(bitstring_list) / 2
     cond do
       num_ones >= threshold -> 1
       num_ones < threshold -> 0
