@@ -22,7 +22,7 @@ defmodule Advent1 do
     ~r/seven/ => "7",
     ~r/eight/ => "8",
     ~r/nine/ => "9"
-  } 
+  }
 
   @doc """
 
@@ -64,6 +64,7 @@ defmodule Advent1 do
   def parse_numbers(string) do
     Enum.flat_map(@mapping, fn {regex, num} ->
       matches = Regex.scan(regex, string, return: :index)
+
       case matches do
         [] -> []
         # scan returns a double array, so we need to just pull the first of the pattern match

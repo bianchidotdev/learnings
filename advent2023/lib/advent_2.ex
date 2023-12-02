@@ -1,12 +1,11 @@
 defmodule Advent2 do
-  
   @mapping %{
     "red" => 12,
     "green" => 13,
     "blue" => 14
   }
-  
-    @doc """
+
+  @doc """
 
   ## Examples
 
@@ -31,7 +30,7 @@ defmodule Advent2 do
     raw_games
     |> Enum.map(&parse_game/1)
     |> Enum.filter(&valid_game?/1)
-    |> Enum.map(&(Map.get(&1, "game_number")))
+    |> Enum.map(&Map.get(&1, "game_number"))
     |> Enum.sum()
   end
 
@@ -40,7 +39,9 @@ defmodule Advent2 do
 
     raw_games
     |> Enum.map(&parse_game/1)
-    |> Enum.map(fn map -> Map.take(map, ["red", "green", "blue"]) |> Map.values() |> Enum.reduce(1, &*/2) end)
+    |> Enum.map(fn map ->
+      Map.take(map, ["red", "green", "blue"]) |> Map.values() |> Enum.reduce(1, &*/2)
+    end)
     |> Enum.sum()
   end
 
@@ -54,6 +55,7 @@ defmodule Advent2 do
   defp parse_game(game) do
     ["Game " <> game_str, round_input] = String.split(game, ": ")
     {game_number, _} = Integer.parse(game_str)
+
     round_input
     |> String.split(";")
     |> Enum.map(&parse_round/1)
@@ -82,10 +84,12 @@ defmodule Advent2 do
   end
 
   defp parse_roll(roll) do
-    trimmed = roll
-    |> String.trim()
+    trimmed =
+      roll
+      |> String.trim()
+
     [numStr, color] = String.split(trimmed, " ")
-   {num, _} = Integer.parse(numStr) 
+    {num, _} = Integer.parse(numStr)
     %{color => num}
   end
 end
