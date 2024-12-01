@@ -3,7 +3,7 @@ defmodule AdventOfCode.Day01 do
     [list1, list2] = trim_transpose_and_sort(input)
 
     Enum.zip(list1, list2)
-    |> Enum.map(&calculate_distance/1)
+    |> Enum.map(fn {a, b} -> abs(a - b) end)
     |> Enum.sum()
   end
 
@@ -27,10 +27,6 @@ defmodule AdventOfCode.Day01 do
     |> List.zip()
     |> Enum.map(&Tuple.to_list/1)
     |> Enum.map(&Enum.sort/1)
-  end
-
-  defp calculate_distance({a, b}) do
-    abs(a - b)
   end
 
   defp multiply_by_occurrences(value, frequencies) do
