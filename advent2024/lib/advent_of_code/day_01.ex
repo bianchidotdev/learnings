@@ -24,7 +24,7 @@ defmodule AdventOfCode.Day01 do
       [first, second] = String.split(row, ~r{\s+})
       [String.to_integer(first), String.to_integer(second)]
     end)
-    |> List.zip()
+    |> Enum.zip()
     |> Enum.map(&Tuple.to_list/1)
     |> Enum.map(&Enum.sort/1)
   end
