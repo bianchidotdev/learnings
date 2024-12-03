@@ -7,14 +7,21 @@ defmodule AdventOfCode.Day02 do
   end
 
   def part2(input) do
-   parse_input(input)
-      |> Enum.filter(&any_safe?/1)
-      |> Enum.count()
+    parsed = parse_input(input)
+    # partition parsed into safe and unsafe by diffs_safe?
+    {safe, unsafe} =
+      parsed
+      |> Enum.partition(fn row -> diffs_safe?(diffs(row)) end)
+
+    safe_with_dampener = unsafe
+    |> Enum.filter(&any_safe?/1)
+
+    Enum.count(safe) + Enum.count(safe_with_dampener)
   end
 
   defp any_safe?(row) do
     0..length(row)
-    |>Enum.map(fn i -> List.delete_at(row, i) end)
+    |> Enum.map(fn i -> List.delete_at(row, i) end)
     |> Enum.map(&diffs/1)
     |> Enum.any?(&diffs_safe?/1)
   end

@@ -11,6 +11,7 @@ defmodule AdventOfCode.Day02Test do
   8 6 4 4 1
   1 3 6 7 9
   """
+
   # 7 6 4 2 1 safe
   # 1 2 7 8 9 unsafe
   # 9 7 6 2 1 unsafe
