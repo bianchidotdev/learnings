@@ -11,7 +11,7 @@ defmodule AdventOfCode.Day02 do
     # partition parsed into safe and unsafe by diffs_safe?
     {safe, unsafe} =
       parsed
-      |> Enum.partition(fn row -> diffs_safe?(diffs(row)) end)
+      |> Enum.split_with(fn row -> diffs_safe?(diffs(row)) end)
 
     safe_with_dampener = unsafe
     |> Enum.filter(&any_safe?/1)
