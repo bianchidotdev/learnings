@@ -10,13 +10,14 @@ defmodule AdventOfCode.Day03 do
   def part2(input) do
     parsed = parse(input)
 
-    [first | dont_parts] = String.split(parsed, "don't()")
-    do_parts = dont_parts
+    # first part is always enabled
+    [first | disabled_parts] = String.split(parsed, "don't()")
+    enabled_parts = disabled_parts
     |> Enum.map(fn part -> String.split(part, "do()", parts: 2) end)
     |> Enum.map(&Enum.at(&1, 1))
     |> Enum.filter(&(&1))
 
-    [first | do_parts]
+    [first | enabled_parts]
     |> Enum.flat_map(fn part -> Regex.scan(~r/mul\(\d{1,3},\d{1,3}\)/, part) end)
     |> Enum.map(fn [match] -> calc_mul(match) end)
     |> Enum.sum()
