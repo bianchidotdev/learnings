@@ -9,7 +9,12 @@ defmodule AdventOfCode.Day04 do
     |> Enum.count()
   end
 
-  def part2(_args) do
+  def part2(input) do
+    parse_input(input)
+    |> get_positions()
+    |> find_part_b_patterns()
+    |> Enum.filter(& &1)
+    |> Enum.count()
   end
 
   defp parse_input(input) do
@@ -51,7 +56,8 @@ defmodule AdventOfCode.Day04 do
       Enum.all?(["M", "A", "S"], fn letter ->
         Map.has_key?(
           positions[letter],
-          {get_position(row, x_op, weights[letter]), get_position(column, y_op, weights[letter])}
+          {get_weighted_pos(row, x_op, weights[letter]),
+           get_weighted_pos(column, y_op, weights[letter])}
         )
       end)
 
@@ -62,7 +68,24 @@ defmodule AdventOfCode.Day04 do
     match
   end
 
-  defp get_position(val, :-, weight), do: val - weight
-  defp get_position(val, :=, _), do: val
-  defp get_position(val, :+, weight), do: val + weight
+  defp find_part_b_patterns(positions) do
+    positions["A"]
+    |> Enum.map(fn {{row, column}, _} ->
+      mas_checks = [
+        [{row - 1, column - 1}, {row + 1, column + 1}],
+        [{row - 1, column + 1}, {row + 1, column - 1}]
+      ]
+
+      Enum.all?(mas_checks, fn [{x1, y1}, {x2, y2}] ->
+        (Map.has_key?(positions["M"], {x1, y1}) and
+           Map.has_key?(positions["S"], {x2, y2})) or
+          (Map.has_key?(positions["M"], {x2, y2}) and
+             Map.has_key?(positions["S"], {x1, y1}))
+      end)
+    end)
+  end
+
+  defp get_weighted_pos(val, :-, weight), do: val - weight
+  defp get_weighted_pos(val, :=, _), do: val
+  defp get_weighted_pos(val, :+, weight), do: val + weight
 end

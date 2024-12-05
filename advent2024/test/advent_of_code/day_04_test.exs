@@ -3,7 +3,7 @@ defmodule AdventOfCode.Day04Test do
 
   import AdventOfCode.Day04
 
-  @input = """
+  @input """
   MMMSXXMASM
   MSAMXMSMSA
   AMXSXMAAMM
