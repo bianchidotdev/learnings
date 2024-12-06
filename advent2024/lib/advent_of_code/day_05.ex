@@ -17,6 +17,20 @@ defmodule AdventOfCode.Day05 do
       |> Enum.split_with(&correct_order?(&1, rules))
 
     incorrect_updates
+    |> Enum.map(&order_update(&1, rules))
+    |> Enum.map(&get_middle_page/1)
+    |> Enum.map(&String.to_integer/1)
+    |> Enum.sum()
+  end
+
+  defp order_update(update, rules) do
+    update
+    |> Enum.sort(fn first, second ->
+      case rules[second] do
+        nil -> true
+        array -> !Enum.member?(array, first)
+      end
+    end)
   end
 
   defp get_middle_page(update) do
