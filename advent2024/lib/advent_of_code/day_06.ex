@@ -22,17 +22,24 @@ defmodule AdventOfCode.Day06 do
     grid = parse_input(input)
     {guard_pos, _} = grid.guard
 
-    processes =
-      for x <- 0..(grid.width - 1),
-          y <- 0..(grid.height - 1),
-          !Enum.member?(grid.obstacles, {x, y}) and guard_pos != {x, y} do
-        obstacles = [{x, y} | grid.obstacles]
-        Task.async(fn -> calculate_path(%{grid | obstacles: obstacles}) end)
+    visited =
+      calculate_path(grid)
+      |> Enum.map(fn {{position, _}, _} -> position end)
+      |> Enum.uniq()
+
+    stream =
+      (visited -- [guard_pos])
+      |> Task.async_stream(fn pos ->
+        obstacles = [pos | grid.obstacles]
+        calculate_path(%{grid | obstacles: obstacles})
+      end)
+
+    Enum.reduce(stream, 0, fn {:ok, result}, acc ->
+      case result do
+        false -> acc + 1
+        _ -> acc
       end
-
-    results = Enum.map(processes, &Task.await/1)
-
-    results |> Enum.filter(&(&1 == false)) |> Enum.count()
+    end)
   end
 
   defp calculate_path(grid) do
