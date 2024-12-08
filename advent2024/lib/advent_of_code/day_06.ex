@@ -1,8 +1,10 @@
-defmodule Grid do
+defmodule AdventOfCode.Day06.Grid do
   defstruct grid: [], guard: nil, obstacles: [], width: 0, height: 0
 end
 
 defmodule AdventOfCode.Day06 do
+  alias AdventOfCode.Day06.Grid
+
   @next_direction %{
     up: :right,
     right: :down,
