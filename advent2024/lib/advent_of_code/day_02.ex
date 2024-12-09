@@ -13,8 +13,9 @@ defmodule AdventOfCode.Day02 do
       parsed
       |> Enum.split_with(fn row -> diffs_safe?(diffs(row)) end)
 
-    safe_with_dampener = unsafe
-    |> Enum.filter(&any_safe?/1)
+    safe_with_dampener =
+      unsafe
+      |> Enum.filter(&any_safe?/1)
 
     Enum.count(safe) + Enum.count(safe_with_dampener)
   end

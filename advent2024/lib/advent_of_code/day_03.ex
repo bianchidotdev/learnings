@@ -12,10 +12,12 @@ defmodule AdventOfCode.Day03 do
 
     # first part is always enabled
     [first | disabled_parts] = String.split(parsed, "don't()")
-    enabled_parts = disabled_parts
-    |> Enum.map(fn part -> String.split(part, "do()", parts: 2) end)
-    |> Enum.map(&Enum.at(&1, 1))
-    |> Enum.filter(&(&1))
+
+    enabled_parts =
+      disabled_parts
+      |> Enum.map(fn part -> String.split(part, "do()", parts: 2) end)
+      |> Enum.map(&Enum.at(&1, 1))
+      |> Enum.filter(& &1)
 
     [first | enabled_parts]
     |> Enum.flat_map(fn part -> Regex.scan(~r/mul\(\d{1,3},\d{1,3}\)/, part) end)
