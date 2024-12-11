@@ -1,6 +1,5 @@
 defmodule AdventOfCode.Day11 do
   def part1(input, blinks \\ 25) do
-    # {:ok, cache} = GenServer.start_link(AdventOfCode.Day11.Cache, [])
     parsed = parse_input(input)
 
     parsed
