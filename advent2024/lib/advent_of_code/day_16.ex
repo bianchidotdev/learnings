@@ -9,44 +9,48 @@ defmodule AdventOfCode.Day16 do
     maze = parse_maze(input)
 
     traverse(maze)
-    |> List.flatten()
-    |> Enum.filter(fn {_, _, [last_pos | _]} -> last_pos == maze.end end)
-    |> Enum.map(fn {_, actions, _} -> calculate_path_score(actions) end)
-    |> Enum.min()
+    |> Map.get(maze.end)
   end
 
   def part2(_args) do
   end
 
-  defp calculate_path_score(actions) do
-    Enum.map(actions, fn
-      {:turn, _dir} -> 1001
-      {:straight, _dir} -> 1
-    end)
-    |> Enum.sum()
-  end
-
   defp traverse(maze) do
-    traverse(maze, [], [])
+    traverse(maze, %{maze.self => 0})
   end
 
-  defp traverse(%Maze{self: self, end: end_pos} = maze, actions, path) when self == end_pos,
-    do: {maze, actions, path}
+  defp traverse(maze, path) when maze.self == maze.end do
+    path
+  end
 
   # TODO: convert to not store all paths and instead just the minimum cost to get to a given point
-  defp traverse(maze, actions, path) do
-    possible_moves(maze)
-    |> Enum.reject(fn {_action, new_pos} -> Enum.member?(path, new_pos) end)
-    |> Enum.map(fn {action, new_pos} ->
-      {_face, direction} = action
+  defp traverse(maze, path) do
+    moves = possible_moves(maze)
 
-      new_path = [new_pos | path]
-      new_actions = [action | actions]
+    Enum.reduce(moves, path, fn {{turn, direction}, new_pos}, path ->
+      previous_step_cost = Map.get(path, maze.self, 0)
 
-      maze
-      |> Map.put(:direction, direction)
-      |> Map.put(:self, new_pos)
-      |> traverse(new_actions, new_path)
+      new_cost =
+        case turn do
+          :turn -> previous_step_cost + 1001
+          :straight -> previous_step_cost + 1
+        end
+
+      existing_cost = Map.get(path, new_pos)
+
+      if new_cost < existing_cost do
+        new_path =
+          Map.update(path, new_pos, new_cost, fn
+            old_cost -> min(old_cost, new_cost)
+          end)
+
+        maze
+        |> Map.put(:direction, direction)
+        |> Map.put(:self, new_pos)
+        |> traverse(new_path)
+      else
+        path
+      end
     end)
   end
 
