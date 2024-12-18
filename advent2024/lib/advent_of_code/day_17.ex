@@ -5,7 +5,15 @@ defmodule AdventOfCode.Day17 do
     |> Enum.join(",")
   end
 
-  def part2(_args) do
+  def part2(input) do
+    {commands, registers} = parse_input(input)
+
+    Enum.find(1..100_000_000, fn i ->
+      new_registers = Map.put(registers, :A, i)
+
+      run_program({commands, new_registers}) ==
+        commands
+    end)
   end
 
   defp run_program({commands, registers}) do
